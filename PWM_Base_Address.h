@@ -1,10 +1,3 @@
-/*
- * PWM_Base_Address.h
- *
- * Created: 1/21/2017 3:51:13 PM
- *  Author: Jessy
- */ 
-
 
 #ifndef PWM_BASE_ADDRESS_H_
 #define PWM_BASE_ADDRESS_H_
@@ -14,4 +7,4 @@
 
 #define		RCGC_Register			0x400FE000		//Base Address for RCGC. Register.
 
-#endif /* PWM_BASE_ADDRESS_H_ */
+#endif

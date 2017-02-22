@@ -1,30 +1,36 @@
-/*
- * PWM_Registers.h
- *
- * Created: 1/21/2017 3:52:08 PM
- *  Author: Jessy
- */ 
+
 #include "PWM_Base_Address.h"
 #include "PWM_Offsets.h"
-#include "Data-Types.h"
+#include "../DataTypes/Data_Types.h"
 
 #ifndef PWM_REGISTERS_H_
 #define PWM_REGISTERS_H_
 
-#define PWM_RCGC			(*((volatile u32*)(RCGC_Register		+	_PWM_RCGC		)))
+/* clock for each module */
+#define PWM0_RCC                (*(volatile u32*)(0x40028000 + 0x060))
+#define PWM1_RCC                (*(volatile u32*)(0x40029000 + 0x060))
+
+#define RCGC0__  (*((volatile u32*)( 0x400FE000 + 0x100)))
+#define RCGC2__  (*((volatile u32*)( 0x400FE000 + 0x108)))
+#define RCGCPWM_ (*((volatile u32*)( 0x400FE000 + 0x640)))
+#define RCC____  (*((volatile u32*)( 0x400FE000 + 0x060)))
+
+
+
+#define PWM_RCGC		(*((volatile u32*)(RCGC_Register		+	_PWM_RCGC		)))
 
 /************************************************************************/
 /*						PWM0 Module Registers                           */
 /************************************************************************/
 
-#define PWMCTL_PWM0			(*((volatile u32*)(PWM0_Base_Address	+	_PWMCTL			)))
+#define PWMCTL_PWM0	        (*((volatile u32*)(PWM0_Base_Address	+	_PWMCTL			)))
 #define PWMSYNC_PWM0		(*((volatile u32*)(PWM0_Base_Address	+	_PWMSYNC		)))
 #define PWMENABLE_PWM0		(*((volatile u32*)(PWM0_Base_Address	+	_PWMENABLE		)))
 #define PWMINVERT_PWM0		(*((volatile u32*)(PWM0_Base_Address	+	_PWMINVERT		)))
 #define PWMFAULT_PWM0		(*((volatile u32*)(PWM0_Base_Address	+	_PWMFAULT		)))
 #define PWMINTEN_PWM0		(*((volatile u32*)(PWM0_Base_Address	+	_PWMINTEN		)))
-#define PWMRIS_PWM0			(*((volatile u32*)(PWM0_Base_Address	+	_PWMRIS			)))
-#define PWMISC_PWM0			(*((volatile u32*)(PWM0_Base_Address	+	_PWMISC			)))
+#define PWMRIS_PWM0		(*((volatile u32*)(PWM0_Base_Address	+	_PWMRIS			)))
+#define PWMISC_PWM0		(*((volatile u32*)(PWM0_Base_Address	+	_PWMISC			)))
 #define PWMSTATUS_PWM0		(*((volatile u32*)(PWM0_Base_Address	+	_PWMSTATUS		)))
 #define PWMFAULTVAL_PWM0	(*((volatile u32*)(PWM0_Base_Address	+	_PWMFAULTVAL	)))
 #define PWMENUPD_PWM0		(*((volatile u32*)(PWM0_Base_Address	+	_PWMENUPD		)))
@@ -123,8 +129,8 @@
 #define PWMINVERT_PWM1		(*((volatile u32*)(PWM1_Base_Address	+	_PWMINVERT		)))
 #define PWMFAULT_PWM1		(*((volatile u32*)(PWM1_Base_Address	+	_PWMFAULT		)))
 #define PWMINTEN_PWM1		(*((volatile u32*)(PWM1_Base_Address	+	_PWMINTEN		)))
-#define PWMRIS_PWM1			(*((volatile u32*)(PWM1_Base_Address	+	_PWMRIS			)))
-#define PWMISC_PWM1			(*((volatile u32*)(PWM1_Base_Address	+	_PWMISC			)))
+#define PWMRIS_PWM1		(*((volatile u32*)(PWM1_Base_Address	+	_PWMRIS			)))
+#define PWMISC_PWM1		(*((volatile u32*)(PWM1_Base_Address	+	_PWMISC			)))
 #define PWMSTATUS_PWM1		(*((volatile u32*)(PWM1_Base_Address	+	_PWMSTATUS		)))
 #define PWMFAULTVAL_PWM1	(*((volatile u32*)(PWM1_Base_Address	+	_PWMFAULTVAL	)))
 #define PWMENUPD_PWM1		(*((volatile u32*)(PWM1_Base_Address	+	_PWMENUPD		)))
@@ -211,6 +217,6 @@
 #define PWM3FLTSTAT0_PWM1	(*((volatile u32*)(PWM1_Base_Address	+	_PWM3FLTSTAT0	)))
 #define PWM3FLTSTAT1_PWM1	(*((volatile u32*)(PWM1_Base_Address	+	_PWM3FLTSTAT1	)))
 
-#define PWMPP_PWM1			(*((volatile u32*)(PWM1_Base_Address	+	_PWMPP			)))
+#define PWMPP_PWM1		(*((volatile u32*)(PWM1_Base_Address	+	_PWMPP			)))
 
 #endif /* PWM_REGISTERS_H_ */

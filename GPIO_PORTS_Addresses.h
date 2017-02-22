@@ -1,10 +1,11 @@
 /************************************
-*	(GPIO) Ports ADDRESSES			*
+*	-(GPIO) Ports ADDRESSES			*
+*	-Base Address for every PORT	*
+*	-Start Address for Clock Enable	*
 *************************************
  * GPIO_PORTS_Addresses.h
  *
  * Created: 1/13/2017 6:12:47 PM
- *  Author: Omar Hashem & Ashraf Reda
  */
 
 
@@ -19,6 +20,6 @@
 #define __Port_F_Address		0x40025000	//Start Address of port F.
 
 #define __Clock_Enable			0x400FE608	//Start Address for Clock Enable Register (RCGCGPIO).
-#define __Unlock_Register		0x4C4F434B	//Write this value to the register to unlock GPIOCR Register,
+#define __Unlock_Register		0x4C4F434B
 
 #endif /* GPIO_PORTS_ADDRESSES_H_ */

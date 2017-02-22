@@ -1,10 +1,3 @@
-/*
- * PWM_Offsets.h
- *
- * Created: 1/21/2017 3:51:39 PM
- *  Author: Jessy
- */ 
-
 
 #ifndef PWM_OFFSETS_H_
 #define PWM_OFFSETS_H_

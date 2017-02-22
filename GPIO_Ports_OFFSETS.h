@@ -4,16 +4,13 @@
  * GPIO_Ports_OFFSETS.h
  *
  * Created: 1/13/2017 6:12:47 PM
- *  Author: Omar Hashem & Ashraf Reda
  */
 
 
 #ifndef GPIO_PORTS_OFFSETS_H_
 #define GPIO_PORTS_OFFSETS_H_
 
-#define		_DATA_Offset	0x3FC		//Offset of Data
-
-
+#define		_DATA_Offset	0x3FC		//Offset of Data.
 #define		_DIR_Offset		0x400		//Offset of Data Direction.
 #define		_IS_Offset		0x404		//Offset of Interrupt Sense.
 #define		_IBE_Offset		0x408		//Offset of Interrupt Both Edges.

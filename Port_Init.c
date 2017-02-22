@@ -1,184 +1,90 @@
-/*
- * GPIO.c
- *
- *  Created on: Jan 30, 2017
- *      Author: Jessy
- */
+/*      Include Project files       */
+#include "GPIO_Address_Offset.h"
+#include "DataTypes/Data_Types.h"
 
+/*      Function Definitions        */
+void PortA_Init( void ){    /*  Initialization of PORT A    */
+    RCGC_GPIO       |= 0x01;                 /*  Active clock for port A.           */
+    u32 delay_for_RCGC = RCGC_GPIO;          /*  Allow time for clock to start.     */
+    LOCK_A          |= __Unlock_Register;    /*  Unlock GPIO A.                     */
+    Commit_A        |= 0x80;                 /*  Allow change in pins.              */
 
+    AnalogMode_A    |= 0x00;                 /*  Disable the analog mode.           */
+    PortControl_A   |= 0x00000000;           /*  No port control.                   */
+    DDRPORT_A       |= 0x80;                 /*  Direction of Pins.                 */
+    AltFunSet_A     |= 0x00;                 /*  Disable alternative function.      */
+    DENPORT_A       |= 0x80;                 /*  Enable the digital I/O.            */
+}
 
-#include "GPIO.h"
+void PortB_Init( void ){    /*  Initialization of PORT B    */
+    RCGC_GPIO       |= 0x02;                 /*  Active clock for port B.           */
+    LOCK_B          |= __Unlock_Register;    /*  Unlock GPIO B.                     */
+    Commit_B        |= 0x69;                 /*  Allow change in pin PB0 and PB1.   */
+    AltFunSet_B     |= 0x40;                 /*  Disable alternative function.      */
+    PortControl_B   |= 0x04000000;           /*  No port control.                   */
 
-
-
-
-void Port_Init( void ){
-    /************************************************************************/
-    /*                    Set the Clock for the Used Ports                  */
-    /************************************************************************/
-    RCGC_2 |= 0x1F;         //Set clock for Ports (A, B, C, D, E).
-
-
-    /************************************************************************/
-    /*                    Left uSonic Sensor                                */
-    /************************************************************************/
-    DDRPORT_B &=~(1 << 0); DENPORT_B |= (1 << 0);                               //Left uSonic sensor Rx.
-    DDRPORT_B |= (1 << 5); DENPORT_B |= (1 << 5); PullDOWNPORT_B |= (1 << 5);   //Left uSonic sensor Tx.
-
-
-    /************************************************************************/
-    /*                    Right uSonic Sensor                               */
-    /************************************************************************/
-    DDRPORT_B |= (1 << 2); DENPORT_B |= (1 << 2);                               //Right uSonic sensor Tx.
-    DDRPORT_C &=~(1 << 4); DENPORT_C |= (1 << 4); PullDOWNPORT_C |= (1 << 2);   //Right uSonic sensor Rx.
-
-
-    /************************************************************************/
-    /*                    Front uSonic Sensor                               */
-    /************************************************************************/
-    DDRPORT_B |= (1 << 3); DENPORT_B |= (1 << 3);                               //Front uSonic sensor Tx.
-    DDRPORT_D &=~(1 << 0); DENPORT_D |= (1 << 0); PullDOWNPORT_D |= (1 << 0);   //Front uSonic sensor Rx.
-
-
-    /************************************************************************/
-    /*                    Back uSonic Sensor                                */
-    /************************************************************************/
-    DDRPORT_A |= (1 << 2); DENPORT_A |= (1 << 2);                               //Back uSonic sensor Tx.
-    DDRPORT_A &=~(1 << 7); DENPORT_A |= (1 << 7); PullDOWNPORT_A |= (1 << 7);   //Back uSonic sensor Rx.
-
-
-    /************************************************************************/
-    /*                    Right PWM Module                                  */
-    /************************************************************************/
-    DDRPORT_B |= (1 << 6); DENPORT_B |= (1 << 6); AltFunSet_B |= (1 << 6); PortControl_B |= 0x04000000; //Right PWM for H-Bridge.
-    DDRPORT_B |= (1 << 7); DENPORT_B |= (1 << 7); AltFunSet_B |= (1 << 7); PortControl_B |= 0x40000000; //Right PWM for H-Bridge.
-    DDRPORT_A |= (1 << 4); DENPORT_A |= (1 << 4);   //Enable right H-Bridge module.
-
-
-    /************************************************************************/
-    /*                    Left PWM Module                                   */
-    /************************************************************************/
-    DDRPORT_E |= (1 << 4); DENPORT_E |= (1 << 4); AltFunSet_E |= (1 << 4); PortControl_E |= 0x00040000; //Left PWM for H-Bridge.
-    DDRPORT_E |= (1 << 5); DENPORT_E |= (1 << 5); AltFunSet_E |= (1 << 5); PortControl_E |= 0x00400000; //Left PWM for H-Bridge.
-    DDRPORT_B |= (1 << 4); DENPORT_B |= (1 << 4);   //Enable Left H-Bridge module.
+    DDRPORT_B       |= (1 << 0);             /*  Left Trigger.                      */
+    DDRPORT_B       &=~(1 << 5);             /*  Left Echo.                         */
+    DDRPORT_B       &=~(1 << 3);             /*  Back Echo.                         */
+    DENPORT_B       |= 0x69;                 /*  Enable the digital I/O.            */
 }
 
 
+void PortC_Init( void ){    /*  Initialization of PORT C    */
+    RCGC_GPIO       |= 0x04;                 /*  Active clock for port C.           */
+    LOCK_C          |= __Unlock_Register;    /*  Unlock GPIO C.                     */
+    Commit_C        |= 0x00;                 /*  Allow change in pins.              */
 
+    AnalogMode_C    |= 0x00;                 /*  Disable the analog mode.           */
+    PortControl_C   |= 0x00000000;           /*  No port control.                   */
+    DDRPORT_C       |= 0x00;                 /*  Direction of Port.                 */
+    AltFunSet_C     |= 0x00;                 /*  Disable alternative function.      */
+    DENPORT_C       |= 0x00;                 /*  Enable the digital I/O.            */
+}
 
+void PortD_Init( void ){    /*  Initialization of PORT D    */
+    RCGC_GPIO       |= 0x08;                 /*  Active clock for port D.           */
+    u32 delay_for_RCGC = RCGC_GPIO;          /*  Allow time for clock to start.     */
+    LOCK_D          |= __Unlock_Register;    /*  Unlock GPIO D.                     */
+    Commit_D        |= 0xCF;                 /*  Allow change in pins.              */
 
+    AnalogMode_D    |= 0x00;                 /*  Disable the analog mode.           */
+    PortControl_D   |= 0x00000000;           /*  No port control.                   */
+    DDRPORT_D       |= 0x4F;                 /*  Direction of Pins.                 */
+    AltFunSet_D     |= 0x00;                 /*  Disable alternative function.      */
+    DENPORT_D       |= 0xCF;                 /*  Enable the digital I/O.            */
+    DataPORT_D      |= (1 << 1);
+}
 
-/*                                  Service to set a value of the port.
- *
- * The Dio_WritePort function shall set the specified value for the specified port.
- *
- * When the Dio_WritePort function is called, DIO Channels that are configured as input shall remain unchanged.
- *
- * The Dio_WritePort function shall have no effect on channels within this port which are configured as input channels.
- *
- */
+void PortE_Init( void ){    /*  Initialization of PORT E    */
+    RCGC_GPIO       |= 0x10;                 /*  Active clock for port E.           */
+    u32 delay_for_RCGC = RCGC_GPIO;          /*  Allow time for clock to start.     */
+    LOCK_E          |= __Unlock_Register;    /*  Unlock GPIO E.                     */
+    Commit_E        |= 0x30;                 /*  Allow change in pins.              */
 
+    AnalogMode_E    |= 0x00;                 /*  Disable the analog mode.           */
+    PortControl_E   |= 0x00000000;           /*  No port control.                   */
+    DDRPORT_E       |= 0x10;                 /*  Direction of Pins.                 */
+    AltFunSet_E     |= 0x00;                 /*  Disable alternative function.      */
+    DENPORT_E       |= 0x30;                 /*  Enable the digital I/O.            */
+}
 
-/*                         Writing Data to specific Port.
- * 1) Enable the clock to PORT, since we cannot do anything with the port registers until the clock is enabled.
- * 2) Set the Direction register bits as output.
- * 3) Enable the digital I/O feature of the port.
- * 4) Write Data to the Port.
- *
- */
+void PortF_Init( void ){    /*  Initialization of PORT F    */
+    RCGC_GPIO       |= 0x20;                 /*  Active clock for port F.           */
+    LOCK_F          |= __Unlock_Register;    /*  Unlock GPIO F.                     */
+    Commit_F        |= 0x18;                 /*  Allow change in pins.              */
 
-
-
-
-void Dio_WritePort ( Dio_PortType PortId, Dio_PortLevelType Level ){
-
-
+    AnalogMode_F    |= 0x00;                 /*  Disable the analog mode.           */
+    PortControl_F   |= 0x00000000;           /*  No port control.                   */
+    DDRPORT_F       |= 0x18;                 /*  Direction of Pins.                 */
+    AltFunSet_F     |= 0x00;                 /*  Disable alternative function.      */
+    DENPORT_F       |= 0x18;                 /*  Enable the digital I/O.            */
 }
 
 
-
-
-
-
-/*                              Service to set a level of a channel.
- *  If the specified channel is configured as an output channel,
- *  the Dio_WriteChannel function shall set the specified Level for the specified channel.
- *
- *  If the specified channel is configured as an input channel,
- *  the Dio_WriteChannel function shall have no influence on the physical output.
- *
- *  If the specified channel is configured as an input channel,
- *  the Dio_WriteChannel function shall have no influence on the result of the next Read-Service.
- *
- */
-
-/*                         Writing Data to specific Channel.
- *
- * 1) Enable the clock to PORT, since we cannot do anything with the port registers until the clock is enabled.
- * 2) Set the Direction register bit for the specific Channel.
- * 3) Enable the digital I/O feature of the Channel.
- * 4) Write Data to the Channel (STD_LOW | STD_HIGH).
- *
- */
-
-
-
-void Dio_WriteChannel( Dio_ChannelType ChannelId, Dio_LevelType Level ){
-
-}
-
-
-
-/*                                  Returns the level of all channels of that port.
- *
- * The Dio_ReadPort function shall return the level of all channels of that port.
- *
- * When reading a port which is smaller than the Dio_PortType using the Dio_ReadPort function (see [SWS_Dio_00103]).
- * the function shall set the bits corresponding to undefined port pins to 0.
- *
- */
-
-/*                         Writing Data to specific Port.
- * 1) Enable the clock to PORT, since we cannot do anything with the port registers until the clock is enabled.
- * 2) Set the Direction register bits as input.
- * 3) Enable the digital I/O feature of the port.
- * 4) enable the pull up resistor option in PUR register since the switch circuit does not have pull-up resistor.
- * 5) Return the read data on Data register.
- *
- */
-
-
-
-Dio_PortLevelType Dio_ReadPort( Dio_PortType PortId ){
-
-
-}
-
-
-
-
-
-/*                              Returns the value of the specified DIO channel.
- *
- *  The Dio_ReadChannel function shall return the value of the specified DIO channel.
- *
- *  Regarding the return value of the Dio_ReadChannel function,
- *  the requirements [SWS_Dio_00083] and [SWS_Dio_00084] are applicable.
- *
- */
-
-/*                         Reading Data to specific Channel.
- *
- * 1) Enable the clock to PORT, since we cannot do anything with the port registers until the clock is enabled.
- * 2) Set the Direction register bit for the specific Channel (Input).
- * 3) Enable the digital I/O feature of the Channel.
- * 4) enable the pull up resistor option in PUR register for the specific pin since the switch circuit does not have pull-up resistor.
- * 5) Read the Data of the Channel (STD_LOW | STD_HIGH).
- *
- */
-
-
-
-Dio_LevelType Dio_ReadChannel( Dio_ChannelType ChannelId ){
-
+void Port_Init ( void ){    /*  Port Initializa for all the used GPIO ports */
+    PortF_Init();
+    PortD_Init();
+    PortE_Init();
+    PortB_Init();
 }
